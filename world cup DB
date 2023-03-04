@@ -1,0 +1,90 @@
+>db.createCollection('WorldCups')
+{ "ok" : 1 }
+>db.createCollection('Players')
+{ "ok" : 1 }
+
+WorldCups
+>db.WorldCups.insert({"WorldCup":"FIFA World Cup","Year":2015,"Events":["Men's Football","Women's Football"]})
+WriteResult({ "nInserted" : 1 })
+>db.WorldCups.insert({"WorldCup":"Swimming World Cup","Year":2013,"Events":["100m freestyle","200m Freestyle"]})
+WriteResult({ "nInserted" : 1 })
+>db.WorldCups.insert({"WorldCup":"Cricket World Cup","Year":2019,"Events":["One-Day Cricket","T-20 Cricket"]})
+WriteResult({ "nInserted" : 1 })
+>db.WorldCups.insert({"WorldCup":"Shooting World Cup","Year":2018,"Events":["Rapid Pistol","Shotgun"]})
+WriteResult({ "nInserted" : 1 })
+>db.WorldCups.insert({"WorldCup":"Cycling World Cup","Year":2018,"Events":["Rock Cycling","BMX"]})
+WriteResult({ "nInserted" : 1 })
+
+
+Players
+>db.Players.insert({Name:"Sachin",Age:26,WorldCup:"Cricket World Cup",Year:2019})
+WriteResult({ "nInserted" : 1 })
+>db.Players.insert({Name:"Rasika",Age:23,WorldCup:"Shooting World Cup",Year:2013})
+WriteResult({ "nInserted" : 1 })
+>db.Players.insert({Name:"Vaishnavi",Age:24,WorldCup:"Cycling World Cup",Year:2015})
+WriteResult({ "nInserted" : 1 })
+>db.Players.insert({Name:"Vivek",Age:21,WorldCup:"Cricket World Cup",Year:2019})
+WriteResult({ "nInserted" : 1 })
+>db.Players.insert({Name:"Rameshwar",Age:28,WorldCup:"Football World Cup",Year:2015})
+WriteResult({ "nInserted" : 1 })
+>db.Players.insert({Name:"Bittu",Age:26,WorldCup:"Football World Cup",Year:2018})
+WriteResult({ "nInserted" : 1 })
+>db.Players.insert({Name:"Gayatri",Age:20,WorldCup:"Cricket World Cup",Year:2018})
+WriteResult({ "nInserted" : 1 })
+
+QUERIES
+
+1.
+>db.WorldCups.find({Year:2018}).pretty()
+Output :
+{
+        "_id" : ObjectId("60abbc6205821b9ec274c17d"),
+        "WorldCup" : "Shooting World Cup",
+        "Year" : 2018,
+        "Events" : [
+                "Rapid Pistol",
+                "Shotgun"
+        ]
+}
+{
+        "_id" : ObjectId("60abbc6905821b9ec274c17e"),
+        "WorldCup" : "Cycling World Cup",
+        "Year" : 2018,
+        "Events" : [
+                "Rock Cycling",
+                "BMX"
+        ]
+}
+
+2.
+
+>db.Players.find({Age:{$gt:23}},{Name:1}).pretty()
+Output :
+{ "_id" : ObjectId("60abbca605821b9ec274c17f"), "Name" : "Sachin" }
+{ "_id" : ObjectId("60abbcbb05821b9ec274c181"), "Name" : "Vaishnavi" }
+{ "_id" : ObjectId("60abbcc805821b9ec274c183"), "Name" : "Rameshwar" }
+{ "_id" : ObjectId("60abbcd005821b9ec274c184"), "Name" : "Bittu" }
+
+
+
+
+
+
+
+3.
+>db.WorldCups.find({WorldCup:"FIFA World Cup",Year:2015},{Events:1}).pretty()
+Output :
+{
+        "_id" : ObjectId("60abbc3105821b9ec274c17a"),
+        "Events" : [
+                "Men's Football",
+                "Women's Football"
+        ]
+}
+
+4.
+
+>db.Players.find({WorldCup:"Cricket World Cup",Year:2019},{Name:1}).pretty()
+Output :
+{ "_id" : ObjectId("60abbca605821b9ec274c17f"), "Name" : "Sachin" }
+{ "_id" : ObjectId("60abbcc205821b9ec274c182"), "Name" : "Vivek" }
