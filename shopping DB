@@ -1,0 +1,75 @@
+>db.createCollection('brand');
+>db.createCollection('customer');
+
+brand
+
+>db.brand.insert({"bname":"Bata","hq":"Switzerland","product":["Sports Shoes","Women'sShoes","MenShoes","School Shoes"]});
+WriteResult({ "nInserted" : 1 })
+>db.brand.insert({"bname":"Sparx","hq":"NewDelhi","product":["Sports Shoes","ComfortShoes","Flip Flops"]})
+WriteResult({ "nInserted" : 1 })
+>
+db.brand.insert({"bname":"Adidas","hq":"Germany","product":["Apparel","Footwear","Sports Equipments"]})
+WriteResult({ "nInserted" : 1 })
+>db.brand.insert({"bname":"Nike","hq":"US","product":["Athletic Footwear","Apparel","SportsEquipments"]})
+WriteResult({ "nInserted" : 1 })
+> db.brand.insert({"bname":"Reebok","hq":"US","product":["Sportswear","Footwear"]});
+WriteResult({ "nInserted" : 1 })
+
+
+
+
+
+Customer
+
+>db.customer.insert({"CName":"Rohit","Product_Bought":"Flip Flops","Brand":"Sparx","Popularity":1})
+WriteResult({ "nInserted" : 1 })
+>db.customer.insert({"CName":"Pijush","Product_Bought":"Flip Flops","Brand":"Sparx","Popularity":0})
+WriteResult({ "nInserted" : 1 })
+>db.customer.insert({"CName":"Yogesh","Product_Bought":"Flip Flops","Brand":"Sparx","Popularity":2})
+WriteResult({ "nInserted" : 1 })
+> db.customer.insert({"CName":"Rasika","Product_Bought":"Apparel","Brand":"Adidas","Popularity":9})
+WriteResult({ "nInserted" : 1 })
+>db.customer.insert({"CName":"Gaurav","Product_Bought":"Sports Equipments","Brand":"Nike","Popularity":0})
+WriteResult({ "nInserted" : 1 })
+> db.customer.insert({"CName":"Anushka","Product_Bought":"Footwear","Brand":"Reebok","Popularity":10})
+WriteResult({ "nInserted" : 1 })
+>db.customer.insert({"CName":"Irfan","Product_Bought":"Men Shoes","Brand":"Bata","Popularity":5})
+WriteResult({ "nInserted" : 1 })
+
+
+
+
+
+
+
+
+QUERIES
+
+1.
+>db.brand.distinct("bname");
+Output :
+[ "Adidas", "Bata", "Nike", "Reebok", "Sparx" ]
+
+2.
+>db.brand.find({"bname":"Bata"},{product:1}).pretty();
+Output :
+{
+        "_id" : ObjectId("60ab93bfc317a710b72f067b"),
+        "product" : [
+                "Sports Shoes",
+                "Women's Shoes",
+                "Men Shoes",
+                "School Shoes"
+        ]
+}
+3.
+>db.customer.find({"Product_Bought":"Flip Flops","Brand":"Sparx"},{CName:1}).pretty();
+Output :
+{ "_id" : ObjectId("60ab97f505821b9ec274c15a"), "CName" : "Rohit" }
+{ "_id" : ObjectId("60ab97fd05821b9ec274c15b"), "CName" : "Pijush" }
+{ "_id" : ObjectId("60ab980505821b9ec274c15c"), "CName" : "Yogesh" }
+
+4.
+>db.customer.find({},{CName:1}).sort({Popularity:-1}).limit(1);
+Output :
+{ "_id" : ObjectId("60ab981e05821b9ec274c15f"), "CName" : "Anushka" }
