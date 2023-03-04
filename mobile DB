@@ -1,0 +1,168 @@
+>db.createCollection('Mobile')
+{ "ok" : 1 }
+>db.createCollection('Customer')
+{ "ok" : 1 }
+
+Mobile
+>db.Mobile.insert({"Brand":"iPhone 7 Plus",RAM:"3GB",ROM:"32GB",Rating:10})
+WriteResult({ "nInserted" : 1 })
+>db.Mobile.insert({"Brand":"Oppo K3",RAM:"3GB",ROM:"32GB",Rating:10})
+WriteResult({ "nInserted" : 1 })
+>db.Mobile.insert({"Brand":"OnePlus 5",RAM:"12GB",ROM:"64GB",Rating:9})
+WriteResult({ "nInserted" : 1 })
+>db.Mobile.insert({"Brand":"Samsung J6",RAM:"6GB",ROM:"64GB",Rating:7})
+WriteResult({ "nInserted" : 1 })
+> db.Mobile.insert({"Brand":"Nokia",RAM:"2GB",ROM:"16GB",Rating:5})
+WriteResult({ "nInserted" : 1 })
+
+
+
+
+
+
+
+Customer
+
+>db.Customer.insert({"Name":"Pratiksha","Phone":"iPhone 7 Plus"})
+WriteResult({ "nInserted" : 1 })
+>db.Customer.insert({"Name":"Anushka","Phone":"iPhone 7 Plus"})
+WriteResult({ "nInserted" : 1 })
+>db.Customer.insert({"Name":"Rasika","Phone":"iPhone 7 Plus"})
+WriteResult({ "nInserted" : 1 })
+>db.Customer.insert({"Name":"Pushpa","Phone":"Samsung J6"})
+WriteResult({ "nInserted" : 1 })
+>db.Customer.insert({"Name":"Sayali","Phone":"Samsung J6"})
+WriteResult({ "nInserted" : 1 })
+>db.Customer.insert({"Name":"Pijush","Phone":"Nokia"})
+WriteResult({ "nInserted" : 1 })
+>db.Customer.insert({"Name":"Rohit","Phone":"OnePlus 5"})
+WriteResult({ "nInserted" : 1 })
+>db.Customer.insert({"Name":"Yogesh","Phone":"Oppo K3"})
+WriteResult({ "nInserted" : 1 })
+
+QUERIES
+
+1.
+
+>db.Mobile.find({RAM:"3GB",ROM:"32GB"},{Brand:1}).pretty()
+Output :
+{ "_id" : ObjectId("60abd24605821b9ec274c192"), "Brand" : "iPhone 7 Plus" }
+{ "_id" : ObjectId("60abd25105821b9ec274c193"), "Brand" : "Oppo K3" }
+2.
+>db.Customer.find({Phone:"Samsung J6"},{Name:1}).pretty()
+Output :
+{ "_id" : ObjectId("60abd2ac05821b9ec274c19a"), "Name" : "Pushpa" }
+{ "_id" : ObjectId("60abd2b105821b9ec274c19b"), "Name" : "Sayali" }
+3.
+>db.Mobile.distinct("Brand")
+Output :
+[ "Nokia", "OnePlus 5", "Oppo K3", "Samsung J6", "iPhone 7 Plus" ]
+>db.Mobile.find({Rating:10},{Brand:1})
+Output :
+{ "_id" : ObjectId("60abd24605821b9ec274c192"), "Brand" : "iPhone 7 Plus" }
+{ "_id" : ObjectId("60abd25105821b9ec274c193"), "Brand" : "Oppo K3" }
+4.
+>db.Customer.find({Phone:"iPhone 7 Plus"},{Name:1}).sort({Name:1})
+Output :
+{ "_id" : ObjectId("60abd2a105821b9ec274c198"), "Name" : "Anushka" }
+{ "_id" : ObjectId("60abd29c05821b9ec274c197"), "Name" : "Pratiksha" }
+{ "_id" : ObjectId("60abd2a605821b9ec274c199"), "Name" : "Rasika" }
+
+
+SLIP 18
+>db.createCollection("TourismIndustry")
+{ "ok" : 1 }
+>db.createCollection("Tour")
+{ "ok" : 1 }
+
+TourismIndustry
+>db.TourismIndustry.insert({Name:"Veena World",Rating:10,Package:[{Name:"Shillong",Cost:10000},{Name:"Gujarat",Cost:7000},{Name:"Karnataka",Cost:6000}]})
+WriteResult({ "nInserted" : 1 })
+>db.TourismIndustry.insert({Name:"World Caravan",Rating:8,Package:[{Name:"Shillong",Cost:9000},{Name:"Puducherry",Cost:8000},{Name:"Kerala",Cost:10000}]}) 
+WriteResult({ "nInserted" : 1 })
+> db.TourismIndustry.insert({Name:"Kesari",Rating:9,Package:[{Name:"Manali",Cost:7000},{Name:"Shimla",Cost:9000},{Name:"Kerala",Cost:11000}]})
+WriteResult({ "nInserted" : 1 })
+Tour
+> db.Tour.insert({Source:"Kerala",Destination:"Shillong",TourismIndustry:"Veena World",Expenses:20000,Year:2018,Customer:[{CName:"John"},{CName:"Abhijeet"},{CName:"Manisha"},{CName:"Mansi"}]})
+WriteResult({ "nInserted" : 1 })
+> db.Tour.insert({Source:"Manali",Destination:"Shillong",TourismIndustry:"Veena World",Expenses:30000,Year:2016,Customer:[{CName:"John"},{CName:"Rasika"},{CName:"Pratiksha"},{CName:"Gauri"}]})
+WriteResult({ "nInserted" : 1 })
+> db.Tour.insert({Source:"Shimla",Destination:"Karnataka",TourismIndustry:"World Caravan",Expenses:15000,Year:2012,Customer:[{CName:"John"},{CName:"Deepali"},{CName:"Priyanka"},{CName:"Sukanya"}]})
+WriteResult({ "nInserted" : 1 })
+> db.Tour.insert({Source:"Kerala",Destination:"Dehradun",TourismIndustry:"Kesari",Expenses:17000,Year:2020,Customer:[{CName:"Pijush"},{CName:"Yogesh"},{CName:"Rohit"}]})
+WriteResult({ "nInserted" : 1 })
+
+QUERIES
+
+1.
+>db.TourismIndustry.find({Name:"Kesari"},{Package:1}).pretty()
+Output :
+{
+        "_id" : ObjectId("60abdd9005821b9ec274c1a1"),
+        "Package" : [
+                {
+                        "Name" : "Manali",
+                        "Cost" : 7000
+                },
+                {
+                        "Name" : "Shimla",
+                        "Cost" : 9000
+                },
+                {
+                        "Name" : "Kerala",
+                        "Cost" : 11000
+                }
+        ]
+}
+
+2.
+
+>db.TourismIndustry.find({Rating:10},{Name:1}).pretty()
+Output :
+{ "_id" : ObjectId("60abdd6405821b9ec274c19f"), "Name" : "Veena World" }
+
+3.
+> db.Tour.find({"Customer.CName":"John"},{Expenses:1}).sort({Year:1}).limit(3).pretty()
+Output :
+{ "_id" : ObjectId("60abddca05821b9ec274c1a4"), "Expenses" : 15000 }
+{ "_id" : ObjectId("60abddc105821b9ec274c1a3"), "Expenses" : 30000 }
+{ "_id" : ObjectId("60abddbb05821b9ec274c1a2"), "Expenses" : 20000 }
+> db.Tour.aggregate([{"$sort":{"year":1}},{"$limit":3},{$group:{_id:null,"count":{"$sum":"$Expenses"}}}])
+{ "_id" : null, "count" : 65000 }
+4.
+> db.Tour.find({"Destination":"Shillong"},{"Customer.CName":1}).pretty()
+Output :
+{
+        "_id" : ObjectId("60abddbb05821b9ec274c1a2"),
+        "Customer" : [
+                {
+                        "CName" : "John"
+                },
+                {
+                        "CName" : "Abhijeet"
+                },
+                {
+                        "CName" : "Manisha"
+                },
+                {
+                        "CName" : "Mansi"
+                }
+        ]
+}
+{
+        "_id" : ObjectId("60abddc105821b9ec274c1a3"),
+        "Customer" : [
+                {
+                        "CName" : "John"
+                },
+                {
+                        "CName" : "Rasika"
+                },
+                {
+                        "CName" : "Pratiksha"
+                },
+                {
+                        "CName" : "Gauri"
+                }
+        ]
+}
