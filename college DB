@@ -1,0 +1,64 @@
+>db.createCollection('Colleges');
+>db.createCollection('Professors');
+
+Colleges
+>db.Colleges.insert({"Name":"Bytco College","Courses":["Arts","Science","Commedb.Colleges.insert({"Name":"Bytco College","Courses":["Arts","Science","Commerce"],"Professors":["Prof.Indrayani","Prof.Ashwini"]})
+WriteResult({ "nInserted" : 1 })
+>db.Colleges.insert({"Name":"RYK College","Courses":["Arts","Science","Commerce","Engineering","Management"],"Professors":["Prof.Sneha","Prof.Deepali","Prof.Rutuja","Prof.Nivida","Prof.Priyanka"]})
+WriteResult({ "nInserted" : 1 })
+>db.Colleges.insert({"Name":"BYK College","Courses":["Engineering","Management"],"Professors":["Prof.Shubham","Prof.Suraj"]})
+WriteResult({ "nInserted" : 1 })
+>db.Colleges.insert({"Name":"K.KWagh College","Courses":["Engineering"],"Professors":["Prof.Pooja","Prof.Sayali"]})
+WriteResult({ "nInserted" : 1 })
+
+Professors
+> db.Professors.insert({"PName":"Prof.Indrayani","Age":26,"College":"Bytco College"})
+WriteResult({ "nInserted" : 1 })
+> db.Professors.insert({"PName":"Prof.Ashwini","Age":24,"College":"Bytco College"})
+WriteResult({ "nInserted" : 1 })
+> db.Professors.insert({"PName":"Prof.Sneha","Age":40,"College":"RYK College"})
+WriteResult({ "nInserted" : 1 })
+> db.Professors.insert({"PName":"Prof.Deepali","Age":41,"College":"RYK College"})
+WriteResult({ "nInserted" : 1 })
+> db.Professors.insert({"PName":"Prof.Rutuja","Age":35,"College":"RYK College"})
+WriteResult({ "nInserted" : 1 })
+> db.Professors.insert({"PName":"Prof.Nivida","Age":45,"College":"RYK College"})
+WriteResult({ "nInserted" : 1 })
+> db.Professors.insert({"PName":"Prof.Priyanka","Age":27,"College":"RYK College"})
+WriteResult({ "nInserted" : 1 })
+> db.Professors.insert({"PName":"Prof.Suraj","Age":48,"College":"BYK College"})
+WriteResult({ "nInserted" : 1 })
+> db.Professors.insert({"PName":"Prof.Shubham","Age":70,"College":"BYK College"})
+WriteResult({ "nInserted" : 1 })
+> db.Professors.insert({"PName":"Prof.Sayali","Age":24,"College":"K.K Wagh College"})
+WriteResult({ "nInserted" : 1 })
+> db.Professors.insert({"PName":"Prof.Pooja","Age":22,"College":"K.K Wagh College"})
+WriteResult({ "nInserted" : 1 })
+
+QUERIES
+
+1.
+>db.Colleges.find({"Courses":"Arts"},{Name:1}).pretty();
+Output :
+{ "_id" : ObjectId("60ab9e7105821b9ec274c161"), "Name" : "Bytco College" }
+{ "_id" : ObjectId("60ab9e8f05821b9ec274c162"), "Name" : "RYK College" }
+
+2.
+>db.Professors.find({Age:{$gt:40}},{"PName":1}).pretty();
+Output :
+{ "_id" : ObjectId("60aba0b105821b9ec274c168"), "PName" : "Prof.Deepali" }
+{ "_id" : ObjectId("60aba0bd05821b9ec274c16a"), "PName" : "Prof.Nivida" }
+{ "_id" : ObjectId("60aba0c905821b9ec274c16c"), "PName" : "Prof.Suraj" }
+{ "_id" : ObjectId("60aba0d005821b9ec274c16d"), "PName" : "Prof.Shubham" }
+
+3.
+>db.Colleges.find({"Professors":{$size:5}},{Name:1}).pretty();
+Output :
+{ "_id" : ObjectId("60ab9e8f05821b9ec274c162"), "Name" : "RYK College" }
+
+
+4.
+> db.Colleges.find({$where:"this.Courses.length>2"},{Name:1}).pretty();
+Output :
+{ "_id" : ObjectId("60ab9e7105821b9ec274c161"), "Name" : "Bytco College" }
+{ "_id" : ObjectId("60ab9e8f05821b9ec274c162"), "Name" : "RYK College" }
