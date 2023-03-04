@@ -1,0 +1,140 @@
+>db.createCollection('Product');
+{ "ok" : 1 }
+>db.createCollection('Order');
+{ "ok" : 1 }
+
+Product
+>db.Product.insert({"PId":"P101","PName":"Cycle","Price":5000})
+WriteResult({ "nInserted" : 1 })
+>db.Product.insert({"PId":"P102","PName":"Shoes","Price":1200})
+WriteResult({ "nInserted" : 1 })
+>db.Product.insert({"PId":"P103","PName":"Table","Price":3000})
+WriteResult({ "nInserted" : 1 })
+> db.Product.insert({"PId":"P104","PName":"Speakers","Price":2500})
+WriteResult({ "nInserted" : 1 })
+>db.Product.insert({"PId":"P105","PName":"NVIDIA Graphic Card","Price":15999})
+WriteResult({ "nInserted" : 1 })
+Order
+> db.Order.insert({"OrderNo":"O101","Customer":"Pijush","Product":{"Name":"NVIDIA Graphic Card","Price":15999},"Date":2021-12-3,"Status":"In Process","Bill":16000})
+WriteResult({ "nInserted" : 1 })
+> db.Order.insert({"OrderNo":"O102","Customer":"Yogesh","Product":{"Name":"Shoes","Price":1200},"Date":2017-4-2,"Status":"Processed","Bill":1250,"Invoice":{"InvoiceNo":"N1234","Bill":1250,"Date":2017-4-2}})
+WriteResult({ "nInserted" : 1 })
+> db.Order.insert({"OrderNo":"O103","Customer":"Rohit","Product":{"Name":"Cycle","Price":5000},"Date":2009-12-7,"Status":"In Process","Bill":6000})
+WriteResult({ "nInserted" : 1 })
+> db.Order.insert({"OrderNo":"O104","Customer":"Vivek","Product":{"Name":"Speakers","Price":2500},"Date":2016-11-1,"Status":"Processed","Bill":3000,"Invoice":{"InvoiceNo":"N1235","Bill":3500,"Date":2016-11-1}})
+WriteResult({ "nInserted" : 1 })
+> db.Order.insert({"OrderNo":"O103","Customer":"Sachin","Product":{"Name":"Table","Price":3000},"Date":2008-10-7,"Status":"In Process","Bill":4000})
+WriteResult({ "nInserted" : 1 })
+
+QUERIES
+
+1.
+>db.Product.find().pretty()
+Output :
+{
+        "_id" : ObjectId("60aba88305821b9ec274c170"),
+        "PId" : "P101",
+        "PName" : "Cycle",
+        "Price" : 5000
+}
+{
+        "_id" : ObjectId("60aba88905821b9ec274c171"),
+        "PId" : "P102",
+        "PName" : "Shoes",
+        "Price" : 1200
+}
+{
+        "_id" : ObjectId("60aba88e05821b9ec274c172"),
+        "PId" : "P103",
+        "PName" : "Table",
+        "Price" : 3000
+}
+{
+        "_id" : ObjectId("60aba89305821b9ec274c173"),
+        "PId" : "P104",
+        "PName" : "Speakers",
+        "Price" : 2500
+}
+{
+        "_id" : ObjectId("60aba89905821b9ec274c174"),
+        "PId" : "P105",
+        "PName" : "NVIDIA Graphic Card",
+        "Price" : 15999
+}
+
+2.
+>db.Order.find({Bill:{$gt:10000}}).pretty()
+Output :
+{
+        "_id" : ObjectId("60abac8905821b9ec274c175"),
+        "OrderNo" : "O101",
+        "Customer" : "Pijush",
+        "Product" : {
+                "Name" : "NVIDIA Graphic Card",
+                "Price" : 15999
+        },
+        "Date" : 2006,
+        "Status" : "In Process",
+        "Bill" : 16000
+}
+
+3.
+
+>db.Order.find({Status:"In Process"}).pretty()
+Output :
+{
+        "_id" : ObjectId("60abac8905821b9ec274c175"),
+        "OrderNo" : "O101",
+        "Customer" : "Pijush",
+        "Product" : {
+                "Name" : "NVIDIA Graphic Card",
+                "Price" : 15999
+        },
+        "Date" : 2006,
+        "Status" : "In Process",
+        "Bill" : 16000
+}
+{
+        "_id" : ObjectId("60abacbf05821b9ec274c177"),
+        "OrderNo" : "O103",
+        "Customer" : "Rohit",
+        "Product" : {
+                "Name" : "Cycle",
+                "Price" : 5000
+        },
+        "Date" : 1990,
+        "Status" : "In Process",
+        "Bill" : 6000
+}
+{
+        "_id" : ObjectId("60abacd405821b9ec274c179"),
+        "OrderNo" : "O103",
+        "Customer" : "Sachin",
+        "Product" : {
+                "Name" : "Table",
+                "Price" : 3000
+        },
+        "Date" : 1991,
+        "Status" : "In Process",
+        "Bill" : 4000
+}
+
+4.
+
+> db.Order.find({Customer:"Vivek",Status:"Processed"},{OrderNo:1,Product:1,Date:1,Bill:1,Invoice:1}).pretty();
+Output :
+{
+        "_id" : ObjectId("60abacc605821b9ec274c178"),
+        "OrderNo" : "O104",
+        "Product" : {
+                "Name" : "Speakers",
+                "Price" : 2500
+        },
+        "Date" : 2004,
+        "Bill" : 3000,
+        "Invoice" : {
+                "InvoiceNo" : "N1235",
+                "Bill" : 3500,
+                "Date" : 2004
+        }
+}
