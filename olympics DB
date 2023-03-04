@@ -1,0 +1,65 @@
+>db.createCollection('Olympic')
+{ "ok" : 1 }
+>db.createCollection('Country')
+{ "ok" : 1 }
+
+Olympics
+>db.Olympics.insert({"Name":"Tokyo Olympics",Year:2020,Games:["Shooting","Badminton","Swimming"]})
+WriteResult({ "nInserted" : 1 })
+>db.Olympics.insert({"Name":"Nagano Olympics",Year:2015,Games:["Shooting","Badminton","Gymnastics","Swimming","Cricket","Boating"]})
+WriteResult({ "nInserted" : 1 })
+>db.Olympics.insert({"Name":"Rio Olympics",Year:2010,Games:["Gymnastics","Badminton","Swimming"]})
+WriteResult({ "nInserted" : 1 })
+>db.Olympics.insert({"Name":"Beijing Olympics",Year:2008,Games:["Shooting","Football","Swimming"]})
+WriteResult({ "nInserted" : 1 })
+>db.Olympics.insert({"Name":"London Olympics",Year:2000,Games:["Cycling","Badminton","Swimming"]})
+WriteResult({ "nInserted" : 1 })
+
+Countries
+>db.Countries.insert({"Name":"USA",Olympics:"Nagano Olympics",Year:2015,Games:["Badminton"],Medal:"Silver"})
+WriteResult({ "nInserted" : 1 })
+>db.Countries.insert({"Name":"India",Olympics:"Nagano Olympics",Year:2015,Games:["Badminton"],Medal:"Silver"})
+WriteResult({ "nInserted" : 1 })
+>db.Countries.insert({"Name":"Japan",Olympics:"Nagano Olympics",Year:2015,Games:["Badminton"],Medal:"Silver"})
+WriteResult({ "nInserted" : 1 })
+>db.Countries.insert({"Name":"Brazil",Olympics:"Nagano Olympics",Year:2015,Games:["Badminton","Gymnastics","Swimming","Cricket","Boating","Shooting"],Medal:"Gold"})
+WriteResult({ "nInserted" : 1 })
+>db.Countries.insert({"Name":"India",Olympics:"London Olympics",Year:2000,Games:["Swimming"],Medal:"Bronze"})
+WriteResult({ "nInserted" : 1 })
+>db.Countries.insert({"Name":"China",Olympics:"London Olympics",Year:2015,Games:["Swimming"],Medal:"Bronze"})
+WriteResult({ "nInserted" : 1 })
+>db.Countries.insert({"Name":"SouthKorea",Olympics:"Rio Olympics",Year:2010,Games:["Shooting"],Medal:"Gold"})
+WriteResult({ "nInserted" : 1 })
+
+OUERIES
+1.
+>db.Olympics.find({Year:2008},{Games:1}).pretty();
+Output :
+{
+        "_id" : ObjectId("60abc62a05821b9ec274c189"),
+        "Games" : [
+                "Shooting",
+                "Football",
+                "Swimming"
+        ]
+}
+2.
+>db.Countries.find({Year:2015},{Name:1}).sort({Name:1}).pretty();
+Output :
+{ "_id" : ObjectId("60abc66d05821b9ec274c18e"), "Name" : "Brazil" }
+{ "_id" : ObjectId("60abc81e05821b9ec274c190"), "Name" : "China" }
+{ "_id" : ObjectId("60abc65d05821b9ec274c18c"), "Name" : "India" }
+{ "_id" : ObjectId("60abc66405821b9ec274c18d"), "Name" : "Japan" }
+{ "_id" : ObjectId("60abc65605821b9ec274c18b"), "Name" : "USA" }
+
+3.
+> db.Countries.find({$where:"this.Games.length>2",Year:2015},{Name:1}).pretty();
+Output :
+{ "_id" : ObjectId("60abc66d05821b9ec274c18e"), "Name" : "Brazil" }
+
+4.
+> db.Countries.find({Medal:"Silver",Games:"Badminton",Year:2015},{Name:1}).pretty()
+Output :
+{ "_id" : ObjectId("60abc65605821b9ec274c18b"), "Name" : "USA" }
+{ "_id" : ObjectId("60abc65d05821b9ec274c18c"), "Name" : "India" }
+{ "_id" : ObjectId("60abc66405821b9ec274c18d"), "Name" : "Japan" }
